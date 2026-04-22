@@ -19,7 +19,7 @@ class TestBooksCollector:
         collector.add_new_book('Что делать, если ваш кот хочет вас убить')
 
         # проверяем, что добавилось именно две
-        # словарь books_rating, который нам возвращает метод get_books_rating, имеет длину 2
+        # словарь books_rating, который нам возвращает метод get_books_genre, имеет длину 2
         assert len(collector.get_books_genre()) == 2
 
     # напиши свои тесты ниже
@@ -32,13 +32,21 @@ class TestBooksCollector:
         collector.add_new_book(name)
         assert name not in collector.get_books_genre()
 
-    # Тест 2 Добавление новой книги с названием больше лимита 41 символ:
+    # Тест 2 Добавление новой книги с названием больше лимита (41 символ):
     def test_add_new_book_too_long_name_not_added(self):
         collector = BooksCollector()
         name = 'a' * 41
         collector.add_new_book(name)
         assert name not in collector.get_books_genre()
     
+    # Тест 1.2. Добавление двух одинаковых книг
+    def test_add_new_book_add_two_books(self):
+        # создаем экземпляр (объект) класса BooksCollector
+        collector = BooksCollector()
+        collector.add_new_book('Левша')
+        collector.add_new_book('Левша')
+        assert len(collector.get_books_genre()) == 1
+
     # Тест 3: установка жанра книге ( 3 валидных значения)
     @pytest.mark.parametrize(
         'book_name, genre',
@@ -177,5 +185,6 @@ class TestBooksCollector:
         collector.add_new_book('Маугли')
         collector.add_book_in_favorites('Маугли')
         assert collector.get_list_of_favorites_books() == ['Маугли']
+
 
 
